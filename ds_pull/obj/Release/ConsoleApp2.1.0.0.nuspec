@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>ConsoleApp2</id>
+    <version>1.0.0</version>
+    <authors>ConsoleApp2</authors>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="MySql.Data" version="8.0.32.1" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="13.0.3" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\srini\source\repos\ConsoleApp2\bin\x64\Release\net6.0\ConsoleApp2.runtimeconfig.json" target="lib\net6.0\ConsoleApp2.runtimeconfig.json" />
+    <file src="C:\Users\srini\source\repos\ConsoleApp2\bin\x64\Release\net6.0\ConsoleApp2.dll" target="lib\net6.0\ConsoleApp2.dll" />
+  </files>
+</package>

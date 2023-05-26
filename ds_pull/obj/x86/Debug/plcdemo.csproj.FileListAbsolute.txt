@@ -1,0 +1,49 @@
+E:\Programs 2016\ZK Controller\C# demo5.0\plcdemo\bin\x86\Debug\plcdemo.exe.config
+E:\Programs 2016\ZK Controller\C# demo5.0\plcdemo\bin\x86\Debug\plcdemo.exe
+E:\Programs 2016\ZK Controller\C# demo5.0\plcdemo\bin\x86\Debug\plcdemo.pdb
+E:\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.ResolveComReference.cache
+E:\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.PL.resources
+E:\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.Properties.Resources.resources
+E:\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.GenerateResource.Cache
+E:\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.exe
+E:\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.pdb
+E:\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csprojResolveAssemblyReference.cache
+F:\Other Projects\Programs 2016\ZK Controller\C# demo5.0\plcdemo\bin\x86\Debug\plcdemo.exe.config
+F:\Other Projects\Programs 2016\ZK Controller\C# demo5.0\plcdemo\bin\x86\Debug\plcdemo.exe
+F:\Other Projects\Programs 2016\ZK Controller\C# demo5.0\plcdemo\bin\x86\Debug\plcdemo.pdb
+F:\Other Projects\Programs 2016\ZK Controller\C# demo5.0\plcdemo\bin\x86\Debug\stdole.dll
+F:\Other Projects\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.AssemblyReference.cache
+F:\Other Projects\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.ResolveComReference.cache
+F:\Other Projects\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.PL.resources
+F:\Other Projects\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.Properties.Resources.resources
+F:\Other Projects\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.GenerateResource.cache
+F:\Other Projects\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.CoreCompileInputs.cache
+F:\Other Projects\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.CopyComplete
+F:\Other Projects\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.exe
+F:\Other Projects\Programs 2016\ZK Controller\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.pdb
+D:\Project's\RND\C# demo5.0 ZK+sdk\C# demo5.0\plcdemo\bin\x86\Debug\plcdemo.exe.config
+D:\Project's\RND\C# demo5.0 ZK+sdk\C# demo5.0\plcdemo\bin\x86\Debug\plcdemo.exe
+D:\Project's\RND\C# demo5.0 ZK+sdk\C# demo5.0\plcdemo\bin\x86\Debug\plcdemo.pdb
+D:\Project's\RND\C# demo5.0 ZK+sdk\C# demo5.0\plcdemo\bin\x86\Debug\stdole.dll
+D:\Project's\RND\C# demo5.0 ZK+sdk\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.AssemblyReference.cache
+D:\Project's\RND\C# demo5.0 ZK+sdk\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.ResolveComReference.cache
+D:\Project's\RND\C# demo5.0 ZK+sdk\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.PL.resources
+D:\Project's\RND\C# demo5.0 ZK+sdk\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.Properties.Resources.resources
+D:\Project's\RND\C# demo5.0 ZK+sdk\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.GenerateResource.cache
+D:\Project's\RND\C# demo5.0 ZK+sdk\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.CoreCompileInputs.cache
+D:\Project's\RND\C# demo5.0 ZK+sdk\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.CopyComplete
+D:\Project's\RND\C# demo5.0 ZK+sdk\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.exe
+D:\Project's\RND\C# demo5.0 ZK+sdk\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.pdb
+C:\Users\srini\Documents\C# demo5.0\plcdemo\bin\x86\Debug\plcdemo.exe.config
+C:\Users\srini\Documents\C# demo5.0\plcdemo\bin\x86\Debug\plcdemo.exe
+C:\Users\srini\Documents\C# demo5.0\plcdemo\bin\x86\Debug\stdole.dll
+C:\Users\srini\Documents\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.AssemblyReference.cache
+C:\Users\srini\Documents\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.SuggestedBindingRedirects.cache
+C:\Users\srini\Documents\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.ResolveComReference.cache
+C:\Users\srini\Documents\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.PL.resources
+C:\Users\srini\Documents\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.Properties.Resources.resources
+C:\Users\srini\Documents\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.GenerateResource.cache
+C:\Users\srini\Documents\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.CoreCompileInputs.cache
+C:\Users\srini\Documents\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.csproj.CopyComplete
+C:\Users\srini\Documents\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.exe
+C:\Users\srini\Documents\C# demo5.0\plcdemo\obj\x86\Debug\plcdemo.pdb
