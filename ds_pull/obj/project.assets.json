@@ -1885,19 +1885,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\srini\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\srini\\Desktop\\16062023_finalproject\\myworking.netproject\\ds_pull\\ConsoleApp2.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\srinivas\\myworking.netproject\\ds_pull\\ConsoleApp2.csproj",
       "projectName": "ConsoleApp2",
-      "projectPath": "C:\\Users\\srini\\Desktop\\16062023_finalproject\\myworking.netproject\\ds_pull\\ConsoleApp2.csproj",
-      "packagesPath": "C:\\Users\\srini\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\srini\\Desktop\\16062023_finalproject\\myworking.netproject\\ds_pull\\obj\\",
+      "projectPath": "C:\\Users\\Admin\\Desktop\\srinivas\\myworking.netproject\\ds_pull\\ConsoleApp2.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Admin\\Desktop\\srinivas\\myworking.netproject\\ds_pull\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\srini\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1956,7 +1956,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

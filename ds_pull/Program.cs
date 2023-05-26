@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Google.Protobuf.WellKnownTypes;
-using System.Text;
-using MySql.Data.MySqlClient;
-using System.Configuration;
-using log4net;
+﻿using log4net;
 using log4net.Config;
-using System.Linq.Expressions;
-using System.Reflection.PortableExecutable;
+using log4net.Repository.Hierarchy;
+using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Ocsp;
+using System.Configuration;
 using System.Data;
-using System.IO;
-using System.Xml.Linq;
-
+using System.Runtime.InteropServices;
+using System.Text;
 class Program
 {
     private static readonly ILog logger = LogManager.GetLogger(typeof(Program));
 
-    // Importing external functions from a DLL
     [DllImport("plcommpro.dll", EntryPoint = "Connect")]
     static extern IntPtr Connect(string Parameters);
 
@@ -25,17 +18,20 @@ class Program
     static extern int PullLastError();
 
     [DllImport("plcommpro.dll", EntryPoint = "GetDeviceData")]
-    public static extern int GetDeviceData(IntPtr handle, ref byte buffer, int bufferSize, string tableName, string fileName, string filter, string options);
+    public static extern int GetDeviceData(IntPtr h, ref byte buffer, int buffersize, string tablename, string filename, string filter, string options);
+
 
     [DllImport("plcommpro.dll", EntryPoint = "DeleteDeviceData")]
-    public static extern int DeleteDeviceData(IntPtr handle, string tableName, string data, string options);
-
+    public static extern int DeleteDeviceData(IntPtr h, string tablename, string data, string options);
+    [DllImport("plcommpro.dll", EntryPoint = "GetDeviceDataCount")]
+    public static extern int GetDeviceDataCount(IntPtr h, string tablename, string filter, string options);
     static void Main()
     {
         try
         {
             IntPtr connectionHandle = IntPtr.Zero;
             int dataRetrievalResult = 0;
+            int Devicecount = 0;
             string timestamp = "";
             int logsRead = 0;
             // Configure log4net using a configuration file
@@ -75,94 +71,110 @@ class Program
                         // Fetch device details and store them in separate lists
                         while (deviceReader.Read())
                         {
-                            string deviceName = deviceReader.GetString("name");
-                            string deviceIpAddress = deviceReader.GetString("ipAddress");
-                            int devicePort = deviceReader.GetInt32("port");
-                            int deviceTimeout = deviceReader.GetInt32("timeout");
-                            string devicePassword = deviceReader.GetString("password");
+                            try
+                            {
+                                string deviceName = deviceReader.GetString("name");
+                                string deviceIpAddress = deviceReader.GetString("ipAddress");
+                                int devicePort = deviceReader.GetInt32("port");
+                                int deviceTimeout = deviceReader.GetInt32("timeout");
+                                string devicePassword = deviceReader.GetString("password");
 
-                            nameList.Add(deviceName);
-                            ipAddressList.Add(deviceIpAddress);
-                            portList.Add(devicePort);
-                            timeoutList.Add(deviceTimeout);
-                            passwordList.Add(devicePassword);
+                                nameList.Add(deviceName);
+                                ipAddressList.Add(deviceIpAddress);
+                                portList.Add(devicePort);
+                                timeoutList.Add(deviceTimeout);
+                                passwordList.Add(devicePassword);
+                            }
+                            catch (Exception ex)
+                            {
+                                logger.Error($"Error while fetching device details: {ex.Message}");
+                            }
                         }
 
                         deviceReader.Close();
-                    
 
+                        // Process each device separately
+                        for (int deviceIndex = 0; deviceIndex < nameList.Count; deviceIndex++)
+                        {
+                            try
+                            {
+                                string deviceName = nameList[deviceIndex];
+                                string deviceIpAddress = ipAddressList[deviceIndex];
+                                int devicePort = portList[deviceIndex];
+                                int deviceTimeout = timeoutList[deviceIndex];
+                                string devicePassword = passwordList[deviceIndex];
 
-                        // Build the connection parameters string
-                        string parameters = $"protocol=TCP,ipaddress={deviceIpAddress},port={devicePort},timeout={deviceTimeout},passwd={devicePassword}";
+                                // Build the connection parameters string
+                                string parameters = $"protocol=TCP,ipaddress={deviceIpAddress},port={devicePort},timeout={deviceTimeout},passwd={devicePassword}";
 
-                                    logger.Info($"Connecting to device: {deviceName}, IP: {deviceIpAddress}, Port: {devicePort}, Timeout: {deviceTimeout}");
+                                logger.Info($"Connecting to device: {deviceName}, IP: {deviceIpAddress}, Port: {devicePort}, Timeout: {deviceTimeout}");
 
-                                    // Connect to the device using the external DLL function
-                                    connectionHandle = Connect(parameters);
+                                // Connect to the device using the external DLL function
+                                connectionHandle = Connect(parameters);
 
-                                    logger.Info($"Connection handle: {connectionHandle}");
+                                logger.Info($"Connection handle: {connectionHandle}");
 
-                                    string json = "";
-                                    string[] cards = null;
+                                string json = "";
+                                string[] cards = null;
 
-                                    // If the connection is successful
-                                    if (connectionHandle != IntPtr.Zero)
+                                // If the connection is successful
+                                if (connectionHandle != IntPtr.Zero)
+                                {
+                                    logger.Info($"Connect device succeed! Device: {deviceName}");
+                                    int bufferSize = int.Parse(ConfigurationManager.AppSettings["BufferSize"]);
+
+                                    byte[] buffer = new byte[bufferSize];
+                                    string dataFilter = "";
+                                    string options = "";
+                                    string dataString = "";
+                                    string[] tmp = null;
+                                    string dataTableName = "transaction";
+                                    string fileName = "";
+                                    string filter = "";
+
+                                    // Retrieve device data using the external DLL function
+                                    dataRetrievalResult = GetDeviceData(connectionHandle, ref buffer[0], bufferSize, dataTableName, dataString, dataFilter, options);
+
+                                    logger.Info($"Connection handle: {connectionHandle}, Data retrieval result: {dataRetrievalResult}");
+
+                                    dataString = Encoding.Default.GetString(buffer);
+                                    string[] dataEntries = dataString.Split("\n");
+                                    
+
+                                    // Process each data entry received from the device
+                                    for (int entryIndex = 0; entryIndex < dataEntries.Length; entryIndex++)
                                     {
-                                        logger.Info($"Connect device succeed! Device: {deviceName}");
-                                        int bufferSize = int.Parse(ConfigurationManager.AppSettings["BufferSize"]);
-
-                                        byte[] buffer = new byte[bufferSize];
-                                        string dataFilter = "";
-                                        string options = "";
-                                        string dataString = "";
-                                        string[] tmp = null;
-                                        string dataTableName = "transaction";
-                                        string fileName = "";
-                                        string filter = "";
-
-                                        // Retrieve device data using the external DLL function
-                                        dataRetrievalResult = GetDeviceData(connectionHandle, ref buffer[0], bufferSize, dataTableName, dataString, dataFilter, options);
-
-                                        logger.Info($"Connection handle: {connectionHandle}, Data retrieval result: {dataRetrievalResult}");
-
-                                        dataString = Encoding.Default.GetString(buffer);
-                                        string[] dataEntries = dataString.Split("\n");
-                                        logger.Info($"Received data count: {dataEntries.Length}");
-
-                                        // Process each data entry received from the device
-                                        for (int entryIndex = 0; entryIndex < dataEntries.Length; entryIndex++)
+                                        try
                                         {
-                                            try
+                                            logsRead++;
+                                            string entry = dataEntries[entryIndex];
+                                            logger.Info($"Data received: {entry}");
+
+                                            cards = entry.Split(",");
+
+                                            // Parse the timestamp from the received data
+                                            if (int.TryParse(cards[6], out int timeInSeconds))
                                             {
+                                                int seconds = timeInSeconds % 60;
+                                                int minutes = (timeInSeconds / 60) % 60;
+                                                int hours = (timeInSeconds / 3600) % 24;
+                                                int day = (timeInSeconds / 86400) % 31 + 1;
+                                                int month = (timeInSeconds / 2678400) % 12 + 1;
+                                                int year = (timeInSeconds / 32140800) + 2000;
 
-                                                logsRead++;
-                                                string entry = dataEntries[entryIndex];
-                                                logger.Info($"Data received: {entry}");
-                                               
-                                                cards = entry.Split(",");
-
-                                                // Parse the timestamp from the received data
-                                                if (int.TryParse(cards[6], out int timeInSeconds))
-                                                {
-                                                    int seconds = timeInSeconds % 60;
-                                                    int minutes = (timeInSeconds / 60) % 60;
-                                                    int hours = (timeInSeconds / 3600) % 24;
-                                                    int day = (timeInSeconds / 86400) % 31 + 1;
-                                                    int month = (timeInSeconds / 2678400) % 12 + 1;
-                                                    int year = (timeInSeconds / 32140800) + 2000;
-
-                                                    timestamp = $"{year}-{month:00}-{day:00} {hours:00}:{minutes:00}:{seconds:00}";
-                                                }
-                                                else
-                                                {
-                                                    logger.Warn("Timestamp is not in the correct format: " + timestamp);
-                                                }
-
-                                                // Retrieve the module and hostname from the configuration
-                                                string module = ConfigurationManager.AppSettings["Module"];
-                                                string hostname = ConfigurationManager.AppSettings["Hostname"];
-                                                string dataType = ConfigurationManager.AppSettings["dataType"];
-
+                                                timestamp = $"{year}-{month:00}-{day:00} {hours:00}:{minutes:00}:{seconds:00}";
+                                            }
+                                            else
+                                            {
+                                                logger.Warn("Timestamp is not in the correct format: " + timestamp);
+                                            }
+                                            
+                                            // Retrieve the module and hostname from the configuration
+                                            string module = ConfigurationManager.AppSettings["Module"];
+                                            string hostname = ConfigurationManager.AppSettings["Hostname"];
+                                            string dataType = ConfigurationManager.AppSettings["dataType"];
+                                            
+                                            {
                                                 // Build the JSON data using the received card data and other details
                                                 json = "{\"Cardno\":" + cards[0] + ",\"Pin\":" + cards[1] + ",\"Verified\":" + cards[2] + ",\"DoorID\":" + cards[3] + ",\"EventType\":" + cards[4] + ",\"InOutState\":" + cards[5] + ",\"Time_second\":\"" + timestamp + "\",\"IPAddress\":\"" + deviceIpAddress + "\",\"hostname\":\"" + hostname + "\"}";
 
@@ -194,22 +206,36 @@ class Program
 
                                                 int rowsAffected = command.ExecuteNonQuery();
                                                 logger.Info($"Rows affected: {rowsAffected}");
-                                            }
-                                            catch (Exception e)
-                                            {
-                                                logger.Error("Error while inserting in table: " + e.Message);
-                                            }
+
+                                                Devicecount = GetDeviceDataCount(connectionHandle, dataTableName, dataFilter, options);
+
+                                                logger.Info($"Device count Total: {Devicecount}");
+                                                if (rowsAffected > 0 || Devicecount == dataRetrievalResult)
+                                                {
+                                                    int dataDeleteResult = DeleteDeviceData(connectionHandle, dataTableName, dataString, options);
+                                                    // Check if the deletion operation was successful
+                                                    logger.Info($"Number of Rows are deleted: {rowsAffected}");
+                                                }
+                                                else
+                                                {
+                                                    logger.Info("No rows deleted.");
+                                                }
+ }
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            logger.Error("Error while inserting in table: " + e.Message);
                                         }
                                     }
-                                    else
-                                    {
-                                        logger.Error($"Failed to connect to device: {deviceName}, IP: {deviceIpAddress}, Error: {PullLastError()}");
-                                    }
                                 }
-                                catch (Exception ex)
+                                else
                                 {
-                                    logger.Error($"Error in device loop: {ex.Message}");
+                                    logger.Error($"Failed to connect to device: {deviceName}, IP: {deviceIpAddress}, Error: {PullLastError()}");
                                 }
+                            }
+                            catch (Exception ex)
+                            {
+                                logger.Error($"Error in device loop: {ex.Message}");
                             }
                         }
                     }
